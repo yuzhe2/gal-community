@@ -1,0 +1,70 @@
+body {
+  margin: 0px;
+}
+
+div,
+li {
+  box-sizing: border-box;
+}
+
+input,
+button {
+  outline: none;
+  border: none;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+
+img {
+  width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0px;
+  font-weight: normal;
+}
+
+body {
+  background: #000;
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: "Noto Sans CJK SC", "Helvetica Neue", Helvetica, Arial, Verdana,
+    Geneva, sans-serif;
+}
+
+body::-webkit-scrollbar {
+  width: 8px;
+  background-color: #fff;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #00c5b7;
+  border: 2px solid #fff;
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #3498db;
+}
+
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}

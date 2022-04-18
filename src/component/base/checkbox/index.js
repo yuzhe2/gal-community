@@ -1,0 +1,1 @@
+export { default as vCheckbox } from './checkbox.vue';
