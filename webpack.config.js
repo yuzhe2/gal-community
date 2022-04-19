@@ -67,7 +67,8 @@ module.exports = {
             loader: "sass-resources-loader",
             options: {
               resources: [
-                'src/common/scss/varibles.scss'
+                'src/common/scss/varibles.scss',
+                'src/common/scss/theme.scss'
               ]
             }
           }

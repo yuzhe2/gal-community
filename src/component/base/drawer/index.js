@@ -1,0 +1,1 @@
+export { default as vDrawer } from './drawer.vue';

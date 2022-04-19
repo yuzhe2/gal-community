@@ -71,6 +71,7 @@ export default {
   height: 50px;
   margin-bottom: 10px;
   background-color: rgba(243, 243, 243, .7);
+  z-index: 999;
 }
 
 .header.fixed {

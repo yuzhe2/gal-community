@@ -19,6 +19,9 @@ export default {
     NavBar,
     BackgroundShow,
     GoTop,
+  },
+  mounted() {
+    document.documentElement.setAttribute('data-theme', 'blue');
   }
 };
 </script>

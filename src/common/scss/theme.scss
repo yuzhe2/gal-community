@@ -1,0 +1,63 @@
+// 主题色变换函数
+@function themeColor($mColor, $idx) {
+  $theme-colors: (
+    level0: $mColor,
+  );
+
+  $key: "level#{$idx}";
+  @return map-get($theme-colors, $key);
+};
+
+// 获取对应层级的颜色
+@function level($color, $level) {
+  @return themeColor($color, $level);
+}
+
+$themes: (
+  blue: (
+    l0: level($blue, '0'),
+  ),
+  red: (
+    l0: level($red, '0'),
+  ),
+  orange: (
+    l0: level($orange, '0'),
+  ),
+  purple: (
+    l0: level($purple, '0'),
+  ),
+  green: (
+    l0: level($green, '0'),
+  )
+);
+
+//遍历主题map
+@mixin themeify {
+  @each $theme-name, $theme-map in $themes {
+    //!global 把局部变量强升为全局变量
+    $theme-map: $theme-map !global;
+    //判断html的data-theme的属性值  #{}是sass的插值表达式
+    //& sass嵌套里的父容器标识   @content是混合器插槽，像vue的slot
+    [data-theme="#{$theme-name}"] & {
+      @content;
+    }
+  }
+}
+
+//声明一个根据Key获取颜色的function
+@function themed($key) {
+  @return map-get($theme-map, 'l' + $key);
+}
+
+// 获取背景色
+@mixin background($level) {
+  @include themeify {
+    background-color: themed($level) !important;
+    background: themed($level);
+  }
+}
+
+// 背景色（同主题色）
+.background-color {
+  @include background('0');
+}

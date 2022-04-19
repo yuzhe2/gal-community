@@ -14,16 +14,19 @@
       </a>
     </div>
     <full-screen></full-screen>
+    <theme></theme>
   </div>
 </template>
 
 <script>
 import fullScreen from "./childComps/fullScreen.vue";
+import theme from './childComps/theme.vue';
 
 export default {
   name: "NavBarTools",
   components: {
-    fullScreen
+    fullScreen,
+    theme
   },
   data() {
     return {
@@ -50,7 +53,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 200px;
+    width: 230px;
     height: 100%; 
   }
 
