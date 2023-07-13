@@ -32,10 +32,10 @@ function restData(data) {
   data.forEach((val) => {
     let restItem = {};
     restItem.id = val.id;
-    restItem.title = val.listGameText.find(
+    restItem.title = (val.listGameText.find(
       (val) => val.type === 1 && val.version === 2
-    ).data;
-    restItem.img = `https://galgame.pw/${val.listGamePhoto[0].url}`;
+    ) || {}).data;
+    restItem.img = `https://gallibrary.pw/${val.listGamePhoto[0].url}`;
     restItem.content = extractText(
       val.listGameText.find((val) => val.type === 2 && val.version === 1).data
     );
@@ -55,7 +55,7 @@ function restSingle(data) {
   restItem.saleTime = formatDate(data.saleTime);
   restItem.sinicTime = data.translatedSaleTime ? 
                         formatDate(data.translatedSaleTime) : "无汉化";
-  restItem.gamePhoto = `https://galgame.pw${data.listGamePhoto[0].url}`;
+  restItem.gamePhoto = `https://gallibrary.pw/${data.listGamePhoto[0].url}`;
   restItem.name = data.listGameText.find(
     (val) => val.type === 1 && val.version === 2
   ).data;

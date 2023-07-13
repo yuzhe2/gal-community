@@ -124,6 +124,7 @@ export default {
   },
   methods: {
     renderGal(data) {
+      console.log(data, '3333')
       this.galData = restData(data);
       this.searchState = true;
       setTimeout(() => this.searchState = false, 3000)
