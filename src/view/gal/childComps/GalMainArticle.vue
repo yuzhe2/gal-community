@@ -1,7 +1,7 @@
 <template>
   <div class="gals-panel">
     <ul class="gal-list">
-      <li v-for="(item, index) in pageGal" class="gal-item" :key="index">
+      <li v-for="(item, index) in pageGal" class="gal-item" :key="item.id">
         <div class="gal-item__calendar">
           <span class="gal-item__calender--month">
             {{ item.date.split("月")[0] }}月
@@ -36,7 +36,7 @@
           class="gal-item__area"
         >
           <div class="gal-item__area__img">
-            <img :src="item.img" class="gal-item__area__img--content" />
+            <!-- <img :src="item.img" class="gal-item__area__img--content" /> -->
           </div>
           <div class="gal-item__area__text">
             <p class="gal-item__area__text--content">
@@ -117,8 +117,19 @@ export default {
           title: item.title,
         }
       })
-      console.log(this.$store.state);
     }
+  },
+  created () {
+    const oImgWrap = document.getElementsByClassName('gal-item__area__img')
+
+    this.pageGal.forEach((gal, idx) => {
+      let oImg = new Image()
+      oImg.src = gal.img
+
+      oImg.onload = function () {
+        oImgWrap[idx].appendChild(oImg)
+      }
+    })
   }
 };
 </script>

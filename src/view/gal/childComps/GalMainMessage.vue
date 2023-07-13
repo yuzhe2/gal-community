@@ -1,7 +1,12 @@
 <template>
   <div class="message-panel">
     <div class="message-panel__publish">
-      <button class="message-panel__publish--btn">发布喇叭</button>
+      <button 
+        class="message-panel__publish--btn"
+        @click="show = true"
+      >
+        发布喇叭
+      </button>
     </div>
     <div class="message-panel__wrap">
       <ul class="message-panel__list">
@@ -22,12 +27,22 @@
         </li>
       </ul>
     </div>
+    <message-modal 
+      :show="show"
+      @cancel="show = false"
+      @confirm="handleSendMessage"
+    ></message-modal>
   </div>
 </template>
 
 <script>
+import messageModal from "component/common/modal/index.vue";
+
 export default {
   name: "GalMainMessage",
+  components: {
+    'message-modal': messageModal
+  },
   data() {
     return {
       messageList: [
@@ -71,7 +86,16 @@ export default {
           text: "这个背景!爱了爱了!",
           date: "11小时"
         }
-      ]
+      ],
+      show: false
+    }
+  },
+  methods: {
+    /**
+     * 用来处理用户输入的消息
+     * */ 
+    handleSendMessage(obj) {
+      console.log(obj);
     }
   }
 };

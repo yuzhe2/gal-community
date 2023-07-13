@@ -1,6 +1,5 @@
 // 节流函数
 function debounce(func, delay) {
-  let a = 111
   let timer = null;
   return function (...args) {
     if (timer) {
@@ -19,6 +18,24 @@ function extractText(nodeStr) {
   return oDiv.innerText;
 }
 
+function extractTime(time) {
+  const date = new Date(time);
+
+  const data = date.getDate(),
+    year = date.getFullYear(),
+    mouth = date.getMonth() + 1,
+    minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
+    hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+
+  return {
+    data,
+    year,
+    mouth,
+    hour,
+    minute
+  }
+}
+
 function formatDate(date, separator = "-") {
   const newDate = `${new Date(date).getFullYear()}${separator}
                       ${new Date(date).getMonth() + 1}${separator}
@@ -33,9 +50,9 @@ function restData(data) {
   data.forEach((val) => {
     let restItem = {};
     restItem.id = val.id;
-    restItem.title = (val.listGameText.find(
+    restItem.title = val.listGameText.find(
       (val) => val.type === 1 && val.version === 2
-    ) || {}).data;
+    ).data;
     restItem.img = `https://gallibrary.pw/${val.listGamePhoto[0].url}`;
     restItem.content = extractText(
       val.listGameText.find((val) => val.type === 2 && val.version === 1).data
@@ -56,7 +73,7 @@ function restSingle(data) {
   restItem.saleTime = formatDate(data.saleTime);
   restItem.sinicTime = data.translatedSaleTime ? 
                         formatDate(data.translatedSaleTime) : "无汉化";
-  restItem.gamePhoto = `https://gallibrary.pw/${data.listGamePhoto[0].url}`;
+  restItem.gamePhoto = `https://gallibrary.pw${data.listGamePhoto[0].url}`;
   restItem.name = data.listGameText.find(
     (val) => val.type === 1 && val.version === 2
   ).data;
@@ -69,4 +86,4 @@ function restSingle(data) {
   return restItem;
 }
 
-export { debounce, restData, restSingle };
+export { debounce, restData, restSingle, extractText, extractTime };

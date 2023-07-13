@@ -48,6 +48,7 @@ export default {
 
 <style lang="scss" scoped>
   .ui-drawer.el-drawer__wrapper {
+    user-select: none;
     div.drawer-title {
       position: relative;
       height: 44px;

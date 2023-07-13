@@ -35,6 +35,40 @@
           </ul>
         </div>
       </div>
+      <div class="game-comment">
+        <h3 class="game-comment-title">
+          <i class="fa fa-comments"></i>
+          327条评论
+        </h3>
+        <div class="game-comment-container">
+          <div
+            v-for="(item, index) in commentData"
+            :key="index"
+            class="game-comment-item"
+          >
+            <div class="game-comment-item-user">
+              <a href="javascript:;" class="game-comment-item-user-link">
+                <img :src="item.userPortrait" />
+              </a>
+            </div>
+            <div class="game-comment-item-content">
+              <div class="game-comment-item-content-user">
+                <span class="game-comment-item-content-user-name">
+                  {{ item.userName }}
+                </span>
+              </div>
+              <p class="game-comment-item-content-text">
+                {{ item.commentText }}
+              </p>
+              <div class="game-comment-item-content-info">
+                <span class="game-comment-item-content-info-time">
+                  {{ item.commentTime }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -42,9 +76,7 @@
 <script>
 import { getSingleGame } from "network/game";
 
-import { restSingle } from "src/common/util";
-
-import detailData from "../../tempData/detailData";
+import { restSingle, extractText, extractTime } from "src/common/util";
 
 export default {
   name: "DetailShower",
@@ -57,27 +89,46 @@ export default {
       saleTime: null,
       sinicTime: null,
       details: null,
+      // 用户评论区中的内容(临时数据)
+      commentData: [],
     };
+  },
+  methods: {
+    /**
+     * 用来处理请求回来的评论数据
+     */ 
+    handleCommentData(list) {
+      let commentList = [];
+      list.forEach((comment) => {
+        let obj = {};
+        obj.userName = comment.user.name;
+        obj.userPortrait = `https://gallibrary.pw${comment.user.photo}`;
+        obj.commentText = extractText(comment.data);
+        const time = extractTime(comment.createTime);
+        obj.commentTime = `${time.year}-${time.mouth}-${time.data} ${time.hour}:${time.minute}`;
+        commentList.push(obj);
+      });
+      return commentList;
+    },
   },
   created() {
     this.id = this.$route.params.id;
-    getSingleGame(this.id).then(res => {
+    getSingleGame(this.id).then((res) => {
       let singleData = restSingle(res.data.galData.data);
       this.name = singleData.name;
       this.gamePhoto = singleData.gamePhoto;
       this.brief = singleData.brief;
       this.saleTime = singleData.saleTime;
       this.sinicTime = singleData.sinicTime;
-      this.details = singleData.details
-        .split("。")
-        .filter((val) => val !== "");
+      this.details = singleData.details.split("。").filter((val) => val !== "");
+      this.commentData = this.handleCommentData(res.data.galData.data.listComment);
     });
   },
 };
 </script>
 
 <style lang="scss">
-@media screen and (max-width: 900px){
+@media screen and (max-width: 900px) {
   .game-screenshot__show {
     width: 100%;
   }
@@ -176,12 +227,59 @@ export default {
   border: 1px solid #e3e3e3;
   border-radius: 4px;
   box-shadow: 0 1px 1px 1px rgba(227, 227, 227, 0.5);
-  background-color: rgba(218, 234, 211, .7);
+  background-color: rgba(218, 234, 211, 0.7);
 }
 
 .game-introduction__details__item {
   color: #34a753;
   line-height: 25px;
   font-weight: 700;
+}
+
+.game-comment {
+  &-title {
+    padding: 15px;
+    background-color: rgba(217, 237, 247, 0.8);
+    font-size: 14px;
+    text-align: center;
+    color: #3a87ad;
+  }
+
+  &-container {
+    margin-top: 20px;
+
+    .game-comment-item {
+      display: flex;
+      margin-bottom: 22px;
+
+      &-user {
+        &-link {
+          display: inline-block;
+          width: 140px;
+          height: 140px;
+        }
+      }
+
+      &-content {
+        margin-top: 10px;
+        margin-left: 10px;
+
+        &-user {
+          font-size: 14px;
+          color: #8a6d3b;
+          margin-bottom: 8px;
+        }
+
+        &-text {
+          color: #333;
+          margin-bottom: 8px;
+        }
+
+        &-info {
+          color: #777;
+        }
+      }
+    }
+  }
 }
 </style>

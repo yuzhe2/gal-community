@@ -1,33 +1,19 @@
-// 主题色变换函数
-@function themeColor($mColor, $idx) {
-  $theme-colors: (
-    level0: $mColor,
-  );
-
-  $key: "level#{$idx}";
-  @return map-get($theme-colors, $key);
-};
-
-// 获取对应层级的颜色
-@function level($color, $level) {
-  @return themeColor($color, $level);
-}
-
+// 主题色
 $themes: (
   blue: (
-    l0: level($blue, '0'),
+    l0: $blue,
   ),
   red: (
-    l0: level($red, '0'),
+    l0: $red,
   ),
   orange: (
-    l0: level($orange, '0'),
+    l0: $orange,
   ),
   purple: (
-    l0: level($purple, '0'),
+    l0: $purple,
   ),
   green: (
-    l0: level($green, '0'),
+    l0: $green,
   )
 );
 

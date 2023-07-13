@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <NavBar/>
-    <BackgroundShow />
+    <NavBar v-if="isIndependence" />
+    <BackgroundShow v-if="isIndependence" />
     <router-view></router-view>
-    <GoTop />
+    <GoTop v-if="isIndependence" />
   </div>
 </template>
 
@@ -19,6 +19,12 @@ export default {
     NavBar,
     BackgroundShow,
     GoTop,
+  },
+  computed: {
+    isIndependence () {
+      const name = ['music']
+      return !name.includes(this.$route.name)
+    }
   },
   mounted() {
     document.documentElement.setAttribute('data-theme', 'blue');

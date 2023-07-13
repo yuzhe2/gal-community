@@ -53,7 +53,6 @@ export default {
       getGame({
         keyWord: this.$refs.searchVal.value,
       }).then((res) => {
-        console.log(res, '222222');
         let index = 1,
           gameLen = res.data.galData.page.maxPage;
 

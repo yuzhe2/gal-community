@@ -10,6 +10,7 @@ const ComicSearchList = () => import("view/comic/childComps/ComicSearchList");
 const GalShowMenu = () => import("view/gal/GalShowMenu");
 const CartoonMenu = () => import("view/cartoon/CartoonMenu");
 const CartoonDetail = () => import("view/detail/CartoonDetail");
+const MusicMenu = () => import("view/music/MusicShower");
 
 const routes = [
   {
@@ -39,6 +40,11 @@ const routes = [
   {
     path: "/cartoon",
     component: CartoonMenu,
+  },
+  {
+    path: "/music",
+    name: 'music',
+    component: MusicMenu,
   }
 ]
 
