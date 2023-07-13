@@ -1,5 +1,6 @@
 // 节流函数
 function debounce(func, delay) {
+  let a = 111
   let timer = null;
   return function (...args) {
     if (timer) {
