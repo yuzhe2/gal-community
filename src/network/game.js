@@ -1,12 +1,11 @@
 import request from "./request";
 
-function getGame(opt) {
+function getGame(opt = {}) {
   return request({
     url: "/gal",
     params: {
       page: opt.page || 1,
-      keyWord: opt.keyWord,
-      type: opt.type || 1,
+      keyWord: opt.keyWord || '',
     }
   })
 }

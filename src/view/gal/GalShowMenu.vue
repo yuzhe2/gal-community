@@ -57,6 +57,7 @@
 
 <script>
 import { restData } from "src/common/util";
+import { getGame } from 'src/network/game'
 
 import galData from "../../tempData/galData";
 
@@ -123,12 +124,13 @@ export default {
     }
   },
   methods: {
-    renderGal(data) {
-      this.galData = restData(data);
+    async renderGal (searchVal) {
+      let { data: galData }  = await getGame({ keyWord: searchVal })
+      this.galData = galData.data
       this.searchState = true;
       setTimeout(() => this.searchState = false, 3000)
     },
-  },
+  }
 };
 </script>
 

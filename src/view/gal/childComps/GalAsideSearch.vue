@@ -23,8 +23,6 @@
 </template>
 
 <script>
-import { getGame } from "network/game";
-
 export default {
   name: "GalAsideSearch",
   data() {
@@ -48,33 +46,8 @@ export default {
   },
   methods: {
     searchInput() {
-      let sumGalgame = [];
-
-      getGame({
-        keyWord: this.$refs.searchVal.value,
-      }).then((res) => {
-        let index = 1,
-          gameLen = res.data.galData.page.maxPage;
-
-        sumGalgame = sumGalgame.concat(res.data.galData.data);
-
-        new Promise((resolve, reject) => {
-          if (gameLen === 1 || gameLen === 0) resolve(1);
-
-          for (let i = 1; i < gameLen; i++) {
-            getGame({
-              page: i + 1,
-              keyWord: this.$refs.searchVal.value,
-            }).then((res) => {
-              sumGalgame = sumGalgame.concat(res.data.galData.data);
-              index++;
-              if (index === gameLen) {
-                resolve(1);
-              }
-            });
-          }
-        }).then((res) => this.$emit("renderArticle", sumGalgame));
-      });
+      let searchVal = this.$refs.searchVal.value
+      if (searchVal.trim()) this.$emit("renderArticle", searchVal)
     },
     /**
      * 阻止表单默认事件的方法

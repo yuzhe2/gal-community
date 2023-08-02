@@ -36,7 +36,7 @@
           class="gal-item__area"
         >
           <div class="gal-item__area__img">
-            <!-- <img :src="item.img" class="gal-item__area__img--content" /> -->
+            <img :src="articleDefault" class="gal-item__area__img--temp" />
           </div>
           <div class="gal-item__area__text">
             <p class="gal-item__area__text--content">
@@ -47,29 +47,6 @@
       </li>
     </ul>
     <div class="gal-pager">
-      <ul class="gal-pages">
-        <li class="gal-page--prev">
-          <button 
-            @click="prevPage"
-            class="gal-page--prev__btn"
-          >&lt;</button>
-        </li>
-        <li
-          v-for="(item, index) in Math.ceil(galData.length / 5)"
-          :key="index"
-          @click="currentPage = item"
-          class="gal-page--single"
-          :class="currentPage === item ? 'active' : null"
-        >
-          <button class="gal-page--single__btn">{{item}}</button>
-        </li>
-        <li 
-          @click="nextPage"
-          class="gal-page--next"
-        >
-          <button class="gal-page--next__btn">&gt;</button>
-        </li>
-      </ul>
     </div>
   </div>
 </template>
@@ -83,9 +60,24 @@ export default {
       default: () => [],
     }
   },
+  watch: {
+    galData (newVal) {
+      const oImgWrap = document.getElementsByClassName('gal-item__area__img')
+      newVal.forEach((gal, idx) => {
+        let oImg = new Image()
+        oImg.src = gal.img
+
+        oImg.onload = function () {
+          oImgWrap[idx].removeChild(oImgWrap[idx].childNodes[0])
+          oImgWrap[idx].appendChild(oImg)
+        }
+      })
+    }
+  },
   data() {
     return {
       currentPage: 1,
+      articleDefault: require("assets/img/articleDefault.png")
     }
   },
   computed: {
@@ -126,7 +118,9 @@ export default {
       let oImg = new Image()
       oImg.src = gal.img
 
+
       oImg.onload = function () {
+        oImgWrap[idx].removeChild(oImgWrap[idx].childNodes[0])
         oImgWrap[idx].appendChild(oImg)
       }
     })
